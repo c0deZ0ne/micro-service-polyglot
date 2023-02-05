@@ -28,9 +28,4 @@ export class ProductRepository implements IProductServices {
       console.log(error);
     }
   }
-
-  // async FindProduct({ name }: { name: string }) {
-  //   const product = await ProductsModel.findOne({ name });
-  //   return product;
-  // }
 }

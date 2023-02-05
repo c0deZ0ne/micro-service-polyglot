@@ -12,10 +12,7 @@ export class ProductServices implements IProductServices {
     try {
       const { name, banner, supplier, price, unit, availability, desc } =
         userInput;
-      const product = await this.repository.FindProduct({ name });
-      product ? new Error("produt already exit") : null;
-
-      const newProduct = this.repository.create({
+      const newProduct = await this.repository.create({
         name,
         banner,
         supplier,

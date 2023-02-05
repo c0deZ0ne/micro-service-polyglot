@@ -3,7 +3,7 @@ import express, { NextFunction } from "express";
 
 export const Procusts = (app: express.Application) => {
   const service = new ProductServices();
-  app.post("/product/signup", async (req, res, next: NextFunction) => {
+  app.post("/product/create", async (req, res, next: NextFunction) => {
     try {
       const { name, banner, supplier, price, unit, availability, desc } =
         req.body;
