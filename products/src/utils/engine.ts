@@ -2,13 +2,13 @@ import express from "express";
 import { dataBaseConnection } from "../database/config/connection";
 import { expressApp } from "../express-app";
 import { PORT } from "../config";
-import { Customer } from "../api";
+import { Procusts } from "../api";
 
 const start = async () => {
   const app = express();
   dataBaseConnection();
   expressApp(app);
-  Customer(app);
+  Procusts(app);
 
   app
     .listen(PORT, () => {

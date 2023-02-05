@@ -1,4 +1,5 @@
-export interface custtomers_service_dto{
-    email:string,
-    password:string
+export interface custtomers_service_dto {
+  email: string;
+  password: string;
+  phone: string;
 }

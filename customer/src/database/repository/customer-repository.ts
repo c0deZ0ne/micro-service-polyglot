@@ -16,4 +16,9 @@ export class CustomerRepository {
       console.log(error);
     }
   }
+
+  async FindCustomer({ email }: { email: string }) {
+    const customer = await CustomerModel.findOne({ email });
+    return customer;
+  }
 }
