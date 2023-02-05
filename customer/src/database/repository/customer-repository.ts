@@ -2,7 +2,7 @@ import ICustomer from "../Interfaces/ICustomer";
 import { CustomerModel } from "../models";
 
 export class CustomerRepository {
-  async createCustomer({ email, password, salt, phone }: ICustomer) {
+  async create({ email, password, salt, phone }: ICustomer) {
     try {
       const customer = new CustomerModel({
         email,
@@ -17,7 +17,7 @@ export class CustomerRepository {
     }
   }
 
-  async FindCustomer({ email }: { email: string }) {
+  async Find({ email }: { email: string }) {
     const customer = await CustomerModel.findOne({ email });
     return customer;
   }

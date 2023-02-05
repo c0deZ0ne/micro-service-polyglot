@@ -11,17 +11,20 @@ export class CustomerServices implements IcustomerService {
   async signup(userInput: custtomers_service_dto) {
     try {
       const { password, email, phone } = userInput;
-      const customer = await this.repository.FindCustomer({ email });
-      customer ? new Error("cutomer already exit") : null;
-      const { userPassword, salt } = await GeneratePassword(password);
-      const newCustome = this.repository.createCustomer({
-        email,
-        password: await userPassword,
-        salt,
-        phone: phone,
-      });
-      const token = await GeneratSignature({ email, _id: customer?._id });
-      return await formatData({ token, newCustome });
+      const customer = await this.repository.Find({ email });
+      console.log("fund", customer);
+      if (!customer) {
+        const { userPassword, salt } = await GeneratePassword(password);
+        const newCustome = await this.repository.create({
+          email,
+          password: await userPassword,
+          salt,
+          phone: phone,
+        });
+        const token = await GeneratSignature({ email });
+        return await formatData({ token, newCustome });
+      }
+      return new Error("cutomer already exit");
     } catch (error) {
       throw new Error(`${error}`);
     }

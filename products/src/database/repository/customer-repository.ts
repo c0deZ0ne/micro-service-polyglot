@@ -29,8 +29,8 @@ export class ProductRepository implements IProductServices {
     }
   }
 
-  async FindProduct({ name }: { name: string }) {
-    const product = await ProductsModel.findOne({ name });
-    return product;
-  }
+  // async FindProduct({ name }: { name: string }) {
+  //   const product = await ProductsModel.findOne({ name });
+  //   return product;
+  // }
 }
