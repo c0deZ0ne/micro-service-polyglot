@@ -3,4 +3,5 @@ export default interface ICustomer {
   password: string;
   phone: string;
   salt: string;
+  cart: Array<Object>;
 }

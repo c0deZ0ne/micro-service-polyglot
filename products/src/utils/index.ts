@@ -23,3 +23,5 @@ export const formatData = async (data: any) => {
   }
   throw new Error("Data doesn't exist ");
 };
+
+

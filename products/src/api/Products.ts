@@ -1,6 +1,6 @@
 import { ProductServices } from "../services/products-service";
 import express, { NextFunction } from "express";
-
+import {userAuth} from "./middleware/auth"
 export const Procusts = (app: express.Application) => {
   const service = new ProductServices();
   app.post("/product/create", async (req, res, next: NextFunction) => {

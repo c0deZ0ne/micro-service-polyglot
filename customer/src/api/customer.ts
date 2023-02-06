@@ -1,8 +1,8 @@
 import { CustomerServices } from "../services/customer-service";
-import express, { NextFunction } from "express";
+import express, { NextFunction, Request, Response } from "express";
 export const Customer = (app: express.Application) => {
   const service = new CustomerServices();
-  app.post("/customer/signup", async (req, res, next: NextFunction) => {
+  app.post("/signup", async (req, res, next: NextFunction) => {
     try {
       const { email, password, phone } = req.body;
       const data = await service.signup({ email, password, phone });
@@ -17,5 +17,5 @@ export const Customer = (app: express.Application) => {
     }
   });
 
-  
+  app.post("/signin", (req: Request, res: Response, next: NextFunction) => {});
 };

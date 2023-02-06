@@ -5,8 +5,8 @@ export const GenerateSalt = async () => {
   return await genSalt();
 };
 
-export const GeneratePassword = async (password: string) => {
-  const salt = await GenerateSalt();
+export const GeneratePassword = async (password: string, salt: string) => {
+  // const salt = await GenerateSalt();
   return {
     salt: await GenerateSalt(),
     userPassword: hash(password, salt),
@@ -36,3 +36,13 @@ export async function ValidateSignature(req: Request | any) {
     return false;
   }
 }
+
+export const validatePassword = async (
+  EnterdPassword: string,
+  savesPassword: string,
+  salt: string
+) => {
+  const genpassword = await GeneratePassword(EnterdPassword, salt);
+  if (savesPassword == savesPassword) return true;
+  return false;
+};
