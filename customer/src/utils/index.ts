@@ -23,3 +23,16 @@ export const formatData = async (data: any) => {
   }
   throw new Error("Data doesn't exist ");
 };
+
+export async function ValidateSignature(req: Request | any) {
+  try {
+    const signature = req.get("Authorization");
+    const payload = verify(signature.split(" ")[1], APP_SECRETE as string);
+
+    req.user = payload;
+
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
