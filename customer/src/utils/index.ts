@@ -1,16 +1,14 @@
 import { genSalt, hash } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 import { APP_SECRETE } from "../config";
+
 export const GenerateSalt = async () => {
   return await genSalt();
 };
 
 export const GeneratePassword = async (password: string, salt: string) => {
-  // const salt = await GenerateSalt();
-  return {
-    salt: await GenerateSalt(),
-    userPassword: hash(password, salt),
-  };
+  const hashpassword = await hash(password, salt);
+  return hashpassword as string;
 };
 
 export const GeneratSignature = async (payload: string | object | Buffer) => {
@@ -28,9 +26,7 @@ export async function ValidateSignature(req: Request | any) {
   try {
     const signature = req.get("Authorization");
     const payload = verify(signature.split(" ")[1], APP_SECRETE as string);
-
     req.user = payload;
-
     return true;
   } catch (err) {
     return false;
@@ -39,10 +35,9 @@ export async function ValidateSignature(req: Request | any) {
 
 export const validatePassword = async (
   EnterdPassword: string,
-  savesPassword: string,
+  savedPassword: string,
   salt: string
 ) => {
   const genpassword = await GeneratePassword(EnterdPassword, salt);
-  if (savesPassword == savesPassword) return true;
-  return false;
+  return savedPassword === genpassword;
 };

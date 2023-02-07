@@ -22,43 +22,44 @@ export class CustomerServices implements IcustomerService {
     try {
       const { password, email, phone } = userInput;
       const customer = await this.repository.Find({ email });
-      console.log("fund", customer);
+
       if (!customer) {
         const salt = await genSalt();
-        const { userPassword } = await GeneratePassword(password, salt);
+        const userPassword = await GeneratePassword(password, salt);
         const newCustome = await this.repository.create({
           email,
-          password: await userPassword,
+          password: userPassword,
           salt,
           phone: phone,
+          cart: [],
         });
         const token = await GeneratSignature({ email });
         return await formatData({ token, newCustome });
       }
-      return new Error("cutomer already exit");
-    } catch (error) {
-      throw new Error(`${error}`);
+      throw { message: "cutomer already exit" };
+    } catch (error: any) {
+      return error;
     }
   }
 
   async signin(userInput: custtomers_service_dto_signin) {
     const { email, password } = userInput;
     try {
-      const isEist: ICustomer | null = await this.repository.Find({ email });
-      if (isEist) {
+      const isEixt: ICustomer | null = await this.repository.Find({ email });
+      if (isEixt) {
         const valid = await validatePassword(
           password,
-          isEist.password,
-          isEist.salt
+          isEixt.password,
+          isEixt.salt
         );
-        if (!valid) return new Error("Email or Password is incorrect");
+        if (!valid) throw { message: "Email or Password is incorect" };
         const signnature = await GeneratSignature({ email });
         return formatData({ signnature });
       } else {
-        throw new Error("Email or Password is incorect");
+        throw { message: "Email or Password is incorect" };
       }
     } catch (error) {
-      throw new Error(`${error}`);
+      return error;
     }
   }
   async signout() {}

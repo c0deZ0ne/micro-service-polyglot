@@ -6,11 +6,8 @@ export const CustomerSchema = new mongoose.Schema(
     salt: String,
     phone: String,
     cart: {
-      product: {
-        _id: { type: String, require: true },
-        name:{type:String,required:true},
-        price:{type:Number,require:true},
-      },
+      type: Array<Object>,
+      default: [],
     },
   },
   {
