@@ -10,15 +10,20 @@ export const signup = async (
   try {
     const service = new CustomerServices();
     const { email, password, phone } = req.body;
-    const data = await service.signup({ email, password, phone });
-    console.log(data);
-    return res.status(200).json({
-      code: 200,
-      data,
+    const { signnature, error, custome } = await service.signup({
+      email,
+      password,
+      phone,
+    });
+    if (error) throw { code: 400, error };
+    return res.status(201).json({
+      code: 201,
+      signnature,
+      custome,
     });
   } catch (error: any) {
     console.log(error);
-    next(error.message);
+    return res.status(error.code).json(error);
   }
 };
 
@@ -31,14 +36,9 @@ export const signin = async (
     const service = new CustomerServices();
     const { email, password } = req.body;
     const data = await service.signin({ email, password });
-
-    console.log(data);
-    res.json(data);
+    res.status(200).json({ code: 200, data });
   } catch (error: any) {
     console.log("error", error);
-    res.json({ code: 400, message: error.message });
-    // console.log(error.message);
+    next(error);
   }
-
-  // res.json({ code: 200, message: "cool" });
 };

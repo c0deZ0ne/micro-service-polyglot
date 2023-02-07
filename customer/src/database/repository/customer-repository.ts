@@ -13,7 +13,7 @@ export class CustomerRepository {
       const result = await customer.save();
       return result;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 

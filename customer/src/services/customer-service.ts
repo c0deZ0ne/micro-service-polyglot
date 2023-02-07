@@ -26,17 +26,17 @@ export class CustomerServices implements IcustomerService {
       if (!customer) {
         const salt = await genSalt();
         const userPassword = await GeneratePassword(password, salt);
-        const newCustome = await this.repository.create({
+        const custome = await this.repository.create({
           email,
           password: userPassword,
           salt,
           phone: phone,
           cart: [],
         });
-        const token = await GeneratSignature({ email });
-        return await formatData({ token, newCustome });
+        const signnature = await GeneratSignature({ email });
+        return await formatData({ signnature, custome });
       }
-      throw { message: "cutomer already exit" };
+      throw { error: "cutomer already exit" };
     } catch (error: any) {
       return error;
     }
